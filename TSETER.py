@@ -3,7 +3,6 @@ from tkinter import *
 
 
 def init(data, width = 500, height = 500):
-    # load data.xyz as appropriate
     data.width = width
     data.height = height
     data.startingScreen = True
