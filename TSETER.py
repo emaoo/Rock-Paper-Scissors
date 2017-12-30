@@ -1,9 +1,6 @@
-
+#15112 tkinter skeleton
 from tkinter import *
 
-####################################
-# customize these functions
-####################################
 
 def init(data, width = 500, height = 500):
     # load data.xyz as appropriate
@@ -149,7 +146,7 @@ def mousePressed(event, data):
     
 
 def keyPressed(event, data):
-    # use event.char and event.keysym
+  
     pass
 
 def timerFired(data):
@@ -165,9 +162,7 @@ def redrawAll(canvas, data):
     if data.gameOver == True:
         gameOverScreen(canvas, data)
 
-####################################
-# use the run function as-is
-####################################
+
 
 def run(width=500, height=500):
     def redrawAllWrapper(canvas, data):
@@ -188,20 +183,20 @@ def run(width=500, height=500):
     def timerFiredWrapper(canvas, data):
         timerFired(data)
         redrawAllWrapper(canvas, data)
-        # pause, then call timerFired again
+        
         canvas.after(data.timerDelay, timerFiredWrapper, canvas, data)
-    # Set up data and call init
+   
     class Struct(object): pass
     data = Struct()
     data.width = width
     data.height = height
     data.timerDelay = 100 # milliseconds
     init(data)
-    # create the root and the canvas
+  
     root = Tk()
     canvas = Canvas(root, width=data.width, height=data.height)
     canvas.pack()
-    # set up events
+
     root.bind("<Button-1>", lambda event:
                             mousePressedWrapper(event, canvas, data))
     root.bind("<Key>", lambda event:
