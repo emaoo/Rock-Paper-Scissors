@@ -1,8 +1,9 @@
-#15112 tkinter skeleton
-from tkinter import *
 
+from tkinter import *
+import random
 
 def init(data, width = 500, height = 500):
+  
     data.width = width
     data.height = height
     data.startingScreen = True
@@ -15,6 +16,15 @@ def init(data, width = 500, height = 500):
     data.playerTwoChoice = ""
     data.gameOver = False
     data.gameOverText = ""
+    data.gameOverTextDisplay = False
+    data.dictionaryAI = {"rock": 1, "paper": 1, "scissor": 1}
+    data.yourChoice = ""
+    data.AIGameOver = False
+    data.AIChoice = ""
+    data.highScore = dict()
+    data.yourScore = 0
+    data.AIGameOverTextDisplay = False
+    data.AIScore= 0
 
 def startingScreen(canvas, data):
     canvas.create_text(250, 50,
@@ -29,76 +39,143 @@ def startingScreen(canvas, data):
                         text = "Two Player Mode", font = "Arial 30 bold")
     
 def playOnePlayer(canvas, data):
-    pass
+    if data.onePlayer == True:
+        canvas.create_text(250, 50, text = "Your Move")
+        canvas.create_text(data.width//4, 300, text = "Rock", 
+        font = "Arial 25")
+        canvas.create_rectangle(data.width//4-50, 285, data.width//4+50, 325)
+        canvas.create_text(data.width*2//4, 300, text = "Paper", 
+        font = "Arial 25")
+        canvas.create_rectangle(data.width*2//4-50, 285, data.width*2//4+50, 325)
+        canvas.create_text(data.width*3//4, 300, text = "Scissor",
+            font = "Arial 25")
+        canvas.create_rectangle(data.width*3//4-50, 285, data.width*3//4+50, 325)
+        
     
 def playTwoPlayer(canvas, data):
     if data.playerOneMove == True:
         str = "One"
     if data.playerOneMove == False:
         str = "Two"
-        print("this should print lol")
+        
     
-    canvas.create_text(250, 50, text = "Player %s Move" % str,
-         font = "Arial 30 bold")
-    canvas.create_text(data.width//4, 250, text = "Rock", 
-    font = "Arial 25")
-    canvas.create_rectangle(data.width//4-50, 235, data.width//4+50, 265)
-    canvas.create_text(data.width*2//4, 250, text = "Paper", 
-    font = "Arial 25")
-    canvas.create_rectangle(data.width*2//4-50, 235, data.width*2//4+50, 265)
-    canvas.create_text(data.width*3//4, 250, text = "Scissor",
+        canvas.create_text(250, 50, text = "Your Move")
+        canvas.create_text(data.width//4, 300, text = "Rock", 
         font = "Arial 25")
-    canvas.create_rectangle(data.width*3//4-50, 235, data.width*3//4+50, 265)
+        canvas.create_rectangle(data.width//4-50, 285, data.width//4+50, 325)
+        canvas.create_text(data.width*2//4, 300, text = "Paper", 
+        font = "Arial 25")
+        canvas.create_rectangle(data.width*2//4-50, 285, data.width*2//4+50, 325)
+        canvas.create_text(data.width*3//4, 300, text = "Scissor",
+            font = "Arial 25")
+        canvas.create_rectangle(data.width*3//4-50, 285, data.width*3//4+50, 325)
 
         
-def gameOverScreen(canvas, data):
-    canvas
-    canvas.create_text(150, 400, text = "Player One Score: %d" % data.oneScore)
-    canvas.create_text(300, 400, text = "Player Two Score: %d" % data.twoScore)
+def gameOverScreenWords(canvas, data): 
+    if data.gameOverTextDisplay == True:
+   
+        canvas.create_text(data.width//2, data.height//3,text=data.gameOverText)
+        canvas.create_text(100, 400, text = "Player One Score = %d" % data.oneScore)
+        canvas.create_text(300, 400, text = "Player Two Score = %d" % data.twoScore)
+        canvas.create_text(250, 250, text = "back to home")
+        canvas.create_rectangle(220, 220, 270, 270)
     
-    if data.playerOneChoice == "rock":
-        if data.playerTwoChoice == "rock":
-        	data.playerTwoChoice = ""
-        	data.playerOneChoice = ""
-        elif data.playerTwoChoice == "paper":
-            canvas.create_text(250, 250, text = "Player One Wins!")
-            data.oneScore += 1
-            data.playerOneChoice = ""
-            data.playerTwoChoice = ""
-        else:
-            canvas.create_text(250, 250, text = "Player Two Wins!")
-            data.twoScore += 1
-            data.playerOneChoice = ""
-            data.playerTwoChoice = ""
-    if data.playerOneChoice == "paper":
-        if data.playerTwoChoice == "rock":
-        	canvas.create_text(250, 250, text = "Player One Wins!")
-        	data.oneScore += 1
-        	data.playerOneChoice = ""
-        	data.playerTwoChoice = ""
-        elif data.playerTwoChoice == "paper":
-            canvas.create_text(250, 250, text = "It's a draw!")
-            data.playerTwoChoice = ""
-        else:
-            canvas.create_text(250, 250, text = "Player Two Wins!")
-            data.twoScore += 1
-            data.playerOneChoice = ""
-            data.playerTwoChoice = ""
-    if data.playerOneChoice == "scissor":
-        if data.playerTwoChoice == "rock":
-        	canvas.create_text(250, 250, text = "Player Two Wins!")
-        	data.twoScore += 1
-        	data.playerOneChoice = ""
-        	data.playerTwoChoice = ""
-        elif data.playerTwoChoice == "paper":
-            canvas.create_text(250, 250, text = "Player Two Wins!")
-            data.oneScore += 1
-            data.playerTwoChoice = ""
-            data.playerOneChoice = ""
-        else:
-            canvas.create_text(250, 250, text = "It's a draw!")
-            data.playerTwoChoice = ""
-            data.playerOneChoice = ""
+def AIGameOverScreenWords(canvas, data):
+    if data.AIGameOverTextDisplay == True:
+
+        canvas.create_text(data.width//2, data.height//3,text=data.gameOverText)
+        canvas.create_text(100, 400, text = "Your Score = %d" % data.yourScore)
+        canvas.create_text(300, 400, text = "AI Score = %d" % data.AIScore)
+        canvas.create_text(250, 250, text = "back to home")
+        canvas.create_rectangle(220, 220, 270, 270)
+
+        
+    
+def gameOverScreen(canvas, data):
+    if data.gameOver == True:
+        data.gameOverTextDisplay = True
+        canvas.create_text(150, 400, text = "Player One Score: %d" % data.oneScore)
+        canvas.create_text(300, 400, text = "Player Two Score: %d" % data.twoScore)
+        
+        if data.playerOneChoice == "rock":
+            if data.playerTwoChoice == "rock":
+                data.gameOverText = "It's a draw!"
+            elif data.playerTwoChoice == "paper":
+                data.gameOverText =  "Player One Wins!"
+                data.oneScore += 1
+                
+            else:
+                data.gameOverText = "Player Two Wins!"
+                data.twoScore += 1
+                
+        if data.playerOneChoice == "paper":
+            if data.playerTwoChoice == "rock":
+                data.gameOverText =  "Player One Wins!"
+                data.oneScore += 1
+                
+            elif data.playerTwoChoice == "paper":
+                data.gameOverText =  "It's a draw!"
+                
+            else:
+                data.gameOverText =  "Player Two Wins!"
+                data.twoScore += 1
+                
+        if data.playerOneChoice == "scissor":
+            if data.playerTwoChoice == "rock":
+                data.gameOverText =  "Player Two Wins!"
+                data.twoScore += 1
+                
+            elif data.playerTwoChoice == "paper":
+                data.gameOverText =  "Player Two Wins!"
+                data.oneScore += 1
+                
+            else:
+                data.gameOverText =  "It's a draw!"
+    data.gameOver = False
+
+def AIGameOver(canvas, data):
+    if data.AIGameOver == True:
+        data.AIGameOverTextDisplay = True
+        
+        
+        if data.yourChoice == "rock":
+            if data.AIChoice == "rock":
+                data.gameOverText = "It's a draw!"
+            elif data.AIChoice == "paper":
+                data.gameOverText =  "AI Wins!"
+                data.AIScore += 1
+                
+            else:
+                data.gameOverText = "You Win!"
+                data.yourScore += 1
+                
+        if data.yourChoice == "paper":
+            if data.AIChoice == "rock":
+                data.gameOverText =  "You Win!"
+                data.yourScore += 1
+                
+            elif data.AIChoice == "paper":
+                data.gameOverText =  "It's a draw!"
+                
+            else:
+                data.gameOverText =  "AI Wins!"
+                data.AIScore += 1
+                
+        if data.yourChoice == "scissor":
+            if data.AIChoice == "rock":
+                data.gameOverText =  "AI Wins!"
+                data.AIScore += 1
+                
+            elif data.AIChoice == "paper":
+                data.gameOverText =  "You Win!"
+                data.yourScore += 1
+                
+            else:
+                data.gameOverText =  "It's a draw!"
+    data.AIGameOver = False
+    
+    
+        
     
 
 def mousePressed(event, data):
@@ -112,40 +189,81 @@ def mousePressed(event, data):
     if data.twoPlayer == True:
         if data.playerOneMove == True:
             if ((event.x > data.width//4-50 and event.x < data.width//4+50) and
-                (event.y >235 and event.y < 265)):
+                (event.y >285 and event.y < 325)):
                     print("HIIIII")
                     data.playerOneChoice = "rock"
                     data.playerOneMove = False
+
             elif ((event.x > data.width*2//4-50 and event.x < data.width*2//4+50) and
-                (event.y >235 and event.y < 265)):
+                (event.y >285 and event.y < 325)):
                     data.playerOneChoice = "paper"
                     data.playerOneMove = False
             elif ((event.x > data.width*3//4-50 and event.x < data.width*3//4+50) and
-                (event.y >235 and event.y < 265)):
-                    data.playerOneChoice = "paper"
+                (event.y >285 and event.y < 325)):
+                    data.playerOneChoice = "scissor"
                     data.playerOneMove = False
         else:
             if ((event.x > data.width//4-50 and event.x < data.width//4+50) and
-                (event.y >235 and event.y < 265)):
+                (event.y >285 and event.y < 325)):
                     data.playerTwoChoice = "rock"
                     data.twoPlayer = False
                     data.gameOver = True
             elif ((event.x > data.width*2//4-50 and event.x < data.width*2//4+50) and
-                (event.y >235 and event.y < 265)):
+                (event.y >285 and event.y < 325)):
                     data.playerTwoChoice = "paper"
                     data.twoPlayer = False
                     data.gameOver = True
             elif ((event.x > data.width*3//4-50 and event.x < data.width*3//4+50) and
-                (event.y >235 and event.y < 265)):
-                    data.playerTwoChoice = "paper"
+                (event.y >285 and event.y < 325)):
+                    data.playerTwoChoice = "scissor"
                     data.twoPlayer = False
                     data.gameOver = True
-                
+    if data.gameOverTextDisplay == True:
+        if event.x > 220 and event.x < 270:
+            if event.y > 220 and event.y <270:
+                data.startingScreen = True
+                data.gameOverTextDisplay = False
+                data.gameOver = False
+                data.playerOneMove = ""
+                data.playerTwoMove = ""
+                data.playerOneMove = True
+    if data.onePlayer == True:
+            if ((event.x > data.width//4-50 and event.x < data.width//4+50) and
+                (event.y >285 and event.y < 325)):
+                    print("HIIIII")
+                    data.yourChoice = "rock"
+                    data.dictionaryAI["paper"] += 1
+                    data.AIGameOver = True
+                    data.onePlayer = False
+            elif ((event.x > data.width*2//4-50 and event.x < data.width*2//4+50) and
+                (event.y >285 and event.y < 325)):
+                    data.yourChoice = "paper"
+                    data.dictionaryAI["scissor"] += 1
+                    data.AIGameOver = True
+                    data.onePlayer = False
+            elif ((event.x > data.width*3//4-50 and event.x < data.width*3//4+50) and
+                (event.y >285 and event.y < 325)):
+                    data.yourChoice = "scissor"
+                    data.dictionaryAI["rock"] +=1
+                    data.AIGameOver = True
+                    data.onePlayer = False
+            data.AIChoice = (random.choice([x for x in data.dictionaryAI for y in range(data.dictionaryAI[x])]))
+            print("ai choice = ", data.AIChoice)
             
+    if data.AIGameOverTextDisplay == True:
+        if event.x > 220 and event.x < 270:
+            if event.y > 220 and event.y <270:
+                data.startingScreen = True
+                data.AIGameOverTextDisplay = False
+                data.AIGameOver = False
+                data.AIChoice = ""
+                data.yourChoice = ""
+                data.onePlayer = False
+                
     
 
 def keyPressed(event, data):
-  
+   
     pass
 
 def timerFired(data):
@@ -158,9 +276,11 @@ def redrawAll(canvas, data):
         playOnePlayer(canvas, data)
     if data.twoPlayer == True:
         playTwoPlayer(canvas, data)
-    if data.gameOver == True:
-        gameOverScreen(canvas, data)
-
+    gameOverScreen(canvas, data)
+    gameOverScreenWords(canvas, data)
+    AIGameOver(canvas, data)
+    AIGameOverScreenWords(canvas, data)
+    print(data.dictionaryAI)
 
 
 def run(width=500, height=500):
@@ -182,16 +302,16 @@ def run(width=500, height=500):
     def timerFiredWrapper(canvas, data):
         timerFired(data)
         redrawAllWrapper(canvas, data)
-        
+
         canvas.after(data.timerDelay, timerFiredWrapper, canvas, data)
-   
+ 
     class Struct(object): pass
     data = Struct()
     data.width = width
     data.height = height
-    data.timerDelay = 100 # milliseconds
+    data.timerDelay = 100 
     init(data)
-  
+
     root = Tk()
     canvas = Canvas(root, width=data.width, height=data.height)
     canvas.pack()
@@ -201,8 +321,8 @@ def run(width=500, height=500):
     root.bind("<Key>", lambda event:
                             keyPressedWrapper(event, canvas, data))
     timerFiredWrapper(canvas, data)
-    # and launch the app
-    root.mainloop()  # blocks until window is closed
+    
+    root.mainloop()  
     print("bye!")
 
 run(500, 500)
