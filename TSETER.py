@@ -227,6 +227,7 @@ def mousePressed(event, data):
                 data.playerOneMove = ""
                 data.playerTwoMove = ""
                 data.playerOneMove = True
+                data.onePlayer = False
     if data.onePlayer == True:
             if ((event.x > data.width//4-50 and event.x < data.width//4+50) and
                 (event.y >285 and event.y < 325)):
