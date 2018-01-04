@@ -58,17 +58,17 @@ def playTwoPlayer(canvas, data):
     if data.playerOneMove == False:
         str = "Two"
         
-    
-        canvas.create_text(250, 50, text = "Your Move")
-        canvas.create_text(data.width//4, 300, text = "Rock", 
+    canvas.create_text(250, 50, text = "Player %s Move" % str,
+         font = "Arial 30 bold")
+    canvas.create_text(data.width//4, 300, text = "Rock", 
+    font = "Arial 25")
+    canvas.create_rectangle(data.width//4-50, 285, data.width//4+50, 325)
+    canvas.create_text(data.width*2//4, 300, text = "Paper", 
+    font = "Arial 25")
+    canvas.create_rectangle(data.width*2//4-50, 285, data.width*2//4+50, 325)
+    canvas.create_text(data.width*3//4, 300, text = "Scissor",
         font = "Arial 25")
-        canvas.create_rectangle(data.width//4-50, 285, data.width//4+50, 325)
-        canvas.create_text(data.width*2//4, 300, text = "Paper", 
-        font = "Arial 25")
-        canvas.create_rectangle(data.width*2//4-50, 285, data.width*2//4+50, 325)
-        canvas.create_text(data.width*3//4, 300, text = "Scissor",
-            font = "Arial 25")
-        canvas.create_rectangle(data.width*3//4-50, 285, data.width*3//4+50, 325)
+    canvas.create_rectangle(data.width*3//4-50, 285, data.width*3//4+50, 325)
 
         
 def gameOverScreenWords(canvas, data): 
