@@ -151,7 +151,7 @@ def gameOverScreen(canvas, data):
                 
             else:
                 data.gameOverText = "Player One Wins!"
-                data.onrScore += 1
+                data.oneScore += 1
                 
         if data.playerOneChoice == "paper":
             if data.playerTwoChoice == "rock":
