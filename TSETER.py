@@ -224,7 +224,6 @@ def AIGameOver(canvas, data):
 def mousePressed(event, data):
     if event.x > 100 and event.x < 400:
         if event.y > 225 and event.y <275:
-            print("SIGH")
             data.onePlayer = True
             data.startingScreen = False
         if event.y > 325 and event.y <375:
@@ -262,10 +261,8 @@ def mousePressed(event, data):
                     data.twoPlayer = False
                     data.gameOver = True
     if data.gameOverTextDisplay == True:
-        print("gameovertextdisplay")
         if event.x >175 and event.x < 320:
             if event.y > 290 and event.y < 350:
-                print("LOL")
                 data.startingScreen = True
                 data.gameOverTextDisplay = False
                 data.gameOver = False
@@ -286,8 +283,6 @@ def mousePressed(event, data):
                 data.playerTwoMove = ""
                 data.playerOneMove = True
                 data.twoPlayer = True
-                data.onePlayer = False
-                print("data.onePlayer =", data.onePlayer)
     if data.onePlayer == True:
             if ((event.x > data.width//4-50 and event.x < data.width//4+50) and
                 (event.y >285 and event.y < 325)):
@@ -309,7 +304,6 @@ def mousePressed(event, data):
                     data.AIGameOver = True
                     data.onePlayer = False
             data.AIChoice = (random.choice([x for x in data.dictionaryAI for y in range(data.dictionaryAI[x])]))
-            print("ai choice = ", data.AIChoice)
        
     if data.AIGameOverTextDisplay == True:
         if event.x >175 and event.x < 320:
@@ -397,6 +391,6 @@ def run(width=500, height=500):
     timerFiredWrapper(canvas, data)
     
     root.mainloop()  
-    print("bye!")
+    print("Game Over!")
 
 run(500, 500)
