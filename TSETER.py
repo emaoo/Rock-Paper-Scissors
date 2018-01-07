@@ -1,9 +1,13 @@
+#Eileen Mao 
+#CMU 2021
+#GWC
+#tkinter mainloop 15112
 
 from tkinter import *
 import random
 
 def init(data, width = 500, height = 500):
-  
+    
     data.width = width
     data.height = height
     data.startingScreen = True
@@ -25,69 +29,110 @@ def init(data, width = 500, height = 500):
     data.yourScore = 0
     data.AIGameOverTextDisplay = False
     data.AIScore= 0
+    data.timerCount = 0 
 
 def startingScreen(canvas, data):
-    canvas.create_text(250, 50,
-                        text = "THE ULTIMATE", font = "Arial 30 bold")
-    canvas.create_text(250, 100,
-                        text = "ROCK, PAPER, SCISSORS GAME", font = "Arial 30 bold")
-    canvas.create_rectangle(100, 225, 400, 275, fill = "yellow")
+    ultimateFill = ""
+    if data.timerCount < 5:
+        ultimateFill = "#1F271B"
+    else:
+        ultimateFill = "#F4442E"
+    canvas.create_rectangle(-50, -50, 550, 550, fill = "#19647E")
+    canvas.create_rectangle(10, 10, 495, 495, fill = "#F4D35E")
+    canvas.create_text(250, 50, fill = "#1F271B",
+                        text = "THE", font = "Chalkboard 28 bold")
+    canvas.create_text(250, 100, fill = ultimateFill,
+                        text = "ULTIMATE", font = "Chalkboard 50 bold")
+    canvas.create_text(250, 150, fill = "#1F271B",
+                        text = "ROCK, PAPER, SCISSORS GAME", font = "Chalkboard 28 bold")
+    canvas.create_rectangle(100, 225, 400, 275, fill = "#28AFB0", width = 3)
     canvas.create_text(250, 250,
-                        text = "One Player Mode", font = "Arial 30 bold")
-    canvas.create_rectangle(100, 325, 400, 375, fill = "green")
+                        text = "One Player Mode", font = "Chalkboard 28 bold")
+    canvas.create_rectangle(100, 325, 400, 375, fill = "#EE964B", width = 3)
     canvas.create_text(250, 350,
-                        text = "Two Player Mode", font = "Arial 30 bold")
+                        text = "Two Player Mode", font = "Chalkboard 28 bold")
     
 def playOnePlayer(canvas, data):
     if data.onePlayer == True:
-        canvas.create_text(250, 50, text = "Your Move")
+        canvas.create_rectangle(-50, -50, 550, 550, fill = "#F4D35E")
+        canvas.create_rectangle(10, 10, 495, 495, fill = "#28AFB0")
+        canvas.create_rectangle(data.width//4-50, 280, data.width//4+50, 320, fill = "#EE964B", width = 3)
+        canvas.create_rectangle(data.width*2//4-50, 280, data.width*2//4+50, 320, fill = "#EE964B", width = 3)
+        canvas.create_rectangle(data.width*3//4-50, 280, data.width*3//4+50, 320, fill = "#EE964B", width = 3)
+        canvas.create_text(250, 100, fill = "#1F271B", text = "Your Move", font = "Chalkboard 40 bold")
         canvas.create_text(data.width//4, 300, text = "Rock", 
-        font = "Arial 25")
-        canvas.create_rectangle(data.width//4-50, 285, data.width//4+50, 325)
+        font = "Chalkboard 25")
+        
         canvas.create_text(data.width*2//4, 300, text = "Paper", 
-        font = "Arial 25")
-        canvas.create_rectangle(data.width*2//4-50, 285, data.width*2//4+50, 325)
+        font = "Chalkboard 25")
+        
         canvas.create_text(data.width*3//4, 300, text = "Scissor",
-            font = "Arial 25")
-        canvas.create_rectangle(data.width*3//4-50, 285, data.width*3//4+50, 325)
+            font = "Chalkboard 25")
+        
         
     
 def playTwoPlayer(canvas, data):
+    canvas.create_rectangle(-50, -50, 550, 550, fill = "#28AFB0")
+    canvas.create_rectangle(10, 10, 495, 495, fill = "#EE964B")
+    canvas.create_oval(228, 125, 300, 126, width = 6)
+    canvas.create_rectangle(data.width//4-50, 280, data.width//4+50, 320, fill = "#19647E", width = 3)
+    canvas.create_rectangle(data.width*2//4-50, 280, data.width*2//4+50, 320, fill = "#19647E", width = 3)
+    canvas.create_rectangle(data.width*3//4-50, 280, data.width*3//4+50, 320, fill = "#19647E", width = 3)
     if data.playerOneMove == True:
         str = "One"
     if data.playerOneMove == False:
         str = "Two"
-        
-    canvas.create_text(250, 50, text = "Player %s Move" % str,
-         font = "Arial 30 bold")
-    canvas.create_text(data.width//4, 300, text = "Rock", 
-    font = "Arial 25")
-    canvas.create_rectangle(data.width//4-50, 285, data.width//4+50, 325)
-    canvas.create_text(data.width*2//4, 300, text = "Paper", 
-    font = "Arial 25")
-    canvas.create_rectangle(data.width*2//4-50, 285, data.width*2//4+50, 325)
-    canvas.create_text(data.width*3//4, 300, text = "Scissor",
-        font = "Arial 25")
-    canvas.create_rectangle(data.width*3//4-50, 285, data.width*3//4+50, 325)
+
+    canvas.create_text(250, 100, text = "Player %s Move" % str,
+         font = "Chalkboard 40 bold")
+    canvas.create_text(data.width//4, 300, text = "Rock", fill = "#F9F8F8",
+    font = "Chalkboard 25")
+    
+    canvas.create_text(data.width*2//4, 300, text = "Paper", fill = "#F9F8F8",
+    font = "Chalkboard 25")
+
+    canvas.create_text(data.width*3//4, 300, text = "Scissor", fill = "#F9F8F8",
+        font = "Chalkboard 25")
+    
 
         
 def gameOverScreenWords(canvas, data): 
     if data.gameOverTextDisplay == True:
-   
-        canvas.create_text(data.width//2, data.height//3,text=data.gameOverText)
-        canvas.create_text(100, 400, text = "Player One Score = %d" % data.oneScore)
-        canvas.create_text(300, 400, text = "Player Two Score = %d" % data.twoScore)
-        canvas.create_text(250, 250, text = "back to home")
-        canvas.create_rectangle(220, 220, 270, 270)
+        canvas.create_rectangle(10, 10, 495, 495, fill = "#1F271B")
+        canvas.create_rectangle(175, 220, 320, 280, fill = "#462255")
+        canvas.create_rectangle(175, 290, 320, 350, fill = "#568259")
+        canvas.create_text(data.width//2, data.height//3,fill = "#FE4A49",text=data.gameOverText, 
+        font = "Chalkboard 30 bold")
+        
+        canvas.create_text(130, 400, fill = "#FFEE93", text = "Player One Score = %d" % data.oneScore, font = "Chalkboard 20 bold")
+        canvas.create_text(370, 400, fill = "#ADF7B6", text = "Player Two Score = %d" % data.twoScore , font = "Chalkboard 20 bold")
+        canvas.create_text(250, 250, fill = "#FCF5C7", text = "Replay", 
+        font = "Chalkboard 30 bold")
+        canvas.create_text(250, 320, fill = "#FCF5C7", text = "Home", 
+        font = "Chalkboard 30 bold")
+        canvas.create_text(data.width//2+10, 100, fill = "#F4D35E", 
+        text = "Player one played %s & Player two played %s " % (data.playerOneChoice, data.playerTwoChoice), font = "Chalkboard 18 bold", )
+        
     
 def AIGameOverScreenWords(canvas, data):
     if data.AIGameOverTextDisplay == True:
+        
+        canvas.create_rectangle(10, 10, 495, 495, fill = "#1F271B")
+        canvas.create_rectangle(175, 220, 320, 280, fill = "#462255")
+        canvas.create_rectangle(175, 290, 320, 350, fill = "#2A324B")
+        canvas.create_text(data.width//2, data.height//3,fill = "#FE4A49", text=data.gameOverText, font = "Chalkboard 30 bold")
+        canvas.create_text(data.width//2, 100, fill = "#F4D35E", 
+        text = "You played %s & AI played %s " % (data.yourChoice, data.AIChoice), font = "Chalkboard 20 bold", )
+       
+        canvas.create_text(150, 400, fill = "#FFC09F", text = "Your Score = %d" % data.yourScore, 
+        font = "Chalkboard 20 bold")
+        canvas.create_text(350, 400, fill = "#A0CED9", text = "AI Score = %d" % data.AIScore, 
+        font = "Chalkboard 20 bold")
+        canvas.create_text(250, 250, fill = "#FCF5C7", text = "Replay", 
+        font = "Chalkboard 30 bold")
+        canvas.create_text(250, 320, fill = "#FCF5C7", text = "Home", 
+        font = "Chalkboard 30 bold")
 
-        canvas.create_text(data.width//2, data.height//3,text=data.gameOverText)
-        canvas.create_text(100, 400, text = "Your Score = %d" % data.yourScore)
-        canvas.create_text(300, 400, text = "AI Score = %d" % data.AIScore)
-        canvas.create_text(250, 250, text = "back to home")
-        canvas.create_rectangle(220, 220, 270, 270)
 
         
     
@@ -101,12 +146,12 @@ def gameOverScreen(canvas, data):
             if data.playerTwoChoice == "rock":
                 data.gameOverText = "It's a draw!"
             elif data.playerTwoChoice == "paper":
-                data.gameOverText =  "Player One Wins!"
-                data.oneScore += 1
+                data.gameOverText =  "Player Two Wins!"
+                data.twoScore += 1
                 
             else:
-                data.gameOverText = "Player Two Wins!"
-                data.twoScore += 1
+                data.gameOverText = "Player One Wins!"
+                data.onrScore += 1
                 
         if data.playerOneChoice == "paper":
             if data.playerTwoChoice == "rock":
@@ -136,8 +181,6 @@ def gameOverScreen(canvas, data):
 def AIGameOver(canvas, data):
     if data.AIGameOver == True:
         data.AIGameOverTextDisplay = True
-        
-        
         if data.yourChoice == "rock":
             if data.AIChoice == "rock":
                 data.gameOverText = "It's a draw!"
@@ -181,6 +224,7 @@ def AIGameOver(canvas, data):
 def mousePressed(event, data):
     if event.x > 100 and event.x < 400:
         if event.y > 225 and event.y <275:
+            print("SIGH")
             data.onePlayer = True
             data.startingScreen = False
         if event.y > 325 and event.y <375:
@@ -190,7 +234,6 @@ def mousePressed(event, data):
         if data.playerOneMove == True:
             if ((event.x > data.width//4-50 and event.x < data.width//4+50) and
                 (event.y >285 and event.y < 325)):
-                    print("HIIIII")
                     data.playerOneChoice = "rock"
                     data.playerOneMove = False
 
@@ -219,8 +262,10 @@ def mousePressed(event, data):
                     data.twoPlayer = False
                     data.gameOver = True
     if data.gameOverTextDisplay == True:
-        if event.x > 220 and event.x < 270:
-            if event.y > 220 and event.y <270:
+        print("gameovertextdisplay")
+        if event.x >175 and event.x < 320:
+            if event.y > 290 and event.y < 350:
+                print("LOL")
                 data.startingScreen = True
                 data.gameOverTextDisplay = False
                 data.gameOver = False
@@ -228,10 +273,25 @@ def mousePressed(event, data):
                 data.playerTwoMove = ""
                 data.playerOneMove = True
                 data.onePlayer = False
+                
+                data.oneScore = 0
+                data.twoScore = 0
+                data.twoPlayer = False
+        if event.x > 175 and event.x < 320:
+            if event.y > 220 and event.y <280:
+                data.startingScreen = False
+                data.gameOverTextDisplay = False
+                data.gameOver = False
+                data.playerOneMove = ""
+                data.playerTwoMove = ""
+                data.playerOneMove = True
+                data.twoPlayer = True
+                data.onePlayer = False
+                print("data.onePlayer =", data.onePlayer)
     if data.onePlayer == True:
             if ((event.x > data.width//4-50 and event.x < data.width//4+50) and
                 (event.y >285 and event.y < 325)):
-                    print("HIIIII")
+          
                     data.yourChoice = "rock"
                     data.dictionaryAI["paper"] += 1
                     data.AIGameOver = True
@@ -250,16 +310,28 @@ def mousePressed(event, data):
                     data.onePlayer = False
             data.AIChoice = (random.choice([x for x in data.dictionaryAI for y in range(data.dictionaryAI[x])]))
             print("ai choice = ", data.AIChoice)
-            
+       
     if data.AIGameOverTextDisplay == True:
-        if event.x > 220 and event.x < 270:
-            if event.y > 220 and event.y <270:
+        if event.x >175 and event.x < 320:
+            if event.y > 290 and event.y < 350:
                 data.startingScreen = True
                 data.AIGameOverTextDisplay = False
                 data.AIGameOver = False
                 data.AIChoice = ""
                 data.yourChoice = ""
                 data.onePlayer = False
+                data.AIScore = 0
+                data.yourScore = 0
+        if event.x > 175 and event.x < 320:
+            if event.y > 220 and event.y <280:
+                data.startingScreen = False
+                data.AIGameOverTextDisplay = False
+                data.AIGameOver = False
+                data.AIChoice = ""
+                data.yourChoice = ""
+                data.onePlayer = True
+                data.twoPlayer = False
+                
                 
     
 
@@ -271,6 +343,9 @@ def timerFired(data):
     pass
 
 def redrawAll(canvas, data):
+    data.timerCount += 1
+    if data.timerCount > 10:
+        data.timerCount = 0
     if data.startingScreen == True:
         startingScreen(canvas, data)
     if data.onePlayer == True:
@@ -281,8 +356,6 @@ def redrawAll(canvas, data):
     gameOverScreenWords(canvas, data)
     AIGameOver(canvas, data)
     AIGameOverScreenWords(canvas, data)
-    print(data.dictionaryAI)
-
 
 def run(width=500, height=500):
     def redrawAllWrapper(canvas, data):
