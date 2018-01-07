@@ -106,8 +106,8 @@ def gameOverScreenWords(canvas, data):
         
         canvas.create_text(130, 400, fill = "#FFEE93", text = "Player One Score = %d" % data.oneScore, font = "Chalkboard 20 bold")
         canvas.create_text(370, 400, fill = "#ADF7B6", text = "Player Two Score = %d" % data.twoScore , font = "Chalkboard 20 bold")
-        canvas.create_text(250, 250, fill = "#FCF5C7", text = "Replay", 
-        font = "Chalkboard 30 bold")
+        canvas.create_text(250, 250, fill = "#FCF5C7", text = "Play Again", 
+        font = "Chalkboard 25 bold")
         canvas.create_text(250, 320, fill = "#FCF5C7", text = "Home", 
         font = "Chalkboard 30 bold")
         canvas.create_text(data.width//2+10, 100, fill = "#F4D35E", 
@@ -128,8 +128,8 @@ def AIGameOverScreenWords(canvas, data):
         font = "Chalkboard 20 bold")
         canvas.create_text(350, 400, fill = "#A0CED9", text = "AI Score = %d" % data.AIScore, 
         font = "Chalkboard 20 bold")
-        canvas.create_text(250, 250, fill = "#FCF5C7", text = "Replay", 
-        font = "Chalkboard 30 bold")
+        canvas.create_text(250, 250, fill = "#FCF5C7", text = "Play Again", 
+        font = "Chalkboard 25 bold")
         canvas.create_text(250, 320, fill = "#FCF5C7", text = "Home", 
         font = "Chalkboard 30 bold")
 
@@ -171,7 +171,7 @@ def gameOverScreen(canvas, data):
                 data.twoScore += 1
                 
             elif data.playerTwoChoice == "paper":
-                data.gameOverText =  "Player Two Wins!"
+                data.gameOverText =  "Player One Wins!"
                 data.oneScore += 1
                 
             else:
@@ -283,6 +283,7 @@ def mousePressed(event, data):
                 data.playerTwoMove = ""
                 data.playerOneMove = True
                 data.twoPlayer = True
+                data.onePlayer = False
     if data.onePlayer == True:
             if ((event.x > data.width//4-50 and event.x < data.width//4+50) and
                 (event.y >285 and event.y < 325)):
@@ -316,6 +317,7 @@ def mousePressed(event, data):
                 data.onePlayer = False
                 data.AIScore = 0
                 data.yourScore = 0
+                data.twoPlayer = False
         if event.x > 175 and event.x < 320:
             if event.y > 220 and event.y <280:
                 data.startingScreen = False
